@@ -1,0 +1,280 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Light tokens ─── */
+:root {
+  --bg: #FAFAFA;
+  --bg-off: #F4F4F5;
+  --surface: #FFFFFF;
+  --surface-alt: #F4F4F5;
+  --border: #E4E4E7;
+  --border-strong: #D1D1D6;
+  --accent: #2563EB;
+  --accent-hover: #1D4ED8;
+  --accent-light: rgba(37, 99, 235, 0.08);
+  --text: #0A0A0A;
+  --text-secondary: #374151;
+  --text-tertiary: #6B7280;
+  --green: #16A34A;
+  --green-light: rgba(22, 163, 74, 0.1);
+  --navbar-bg: rgba(250, 250, 250, 0.85);
+  --card-hover-shadow: inset 3px 0 0 #2563EB, 0 8px 30px rgba(0,0,0,0.08);
+}
+
+/* ─── Dark tokens ─── */
+[data-theme="dark"] {
+  --bg: #0F1117;
+  --bg-off: #161B27;
+  --surface: #1A2035;
+  --surface-alt: #1F2937;
+  --border: #2D3748;
+  --border-strong: #4A5568;
+  --accent: #3B82F6;
+  --accent-hover: #2563EB;
+  --accent-light: rgba(59, 130, 246, 0.1);
+  --text: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-tertiary: #64748B;
+  --green: #34D399;
+  --green-light: rgba(52, 211, 153, 0.1);
+  --navbar-bg: rgba(15, 17, 23, 0.85);
+  --card-hover-shadow: inset 3px 0 0 #3B82F6, 0 8px 30px rgba(0,0,0,0.25);
+}
+
+/* ─── Reset ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; max-width: 100%; overflow-x: hidden; }
+
+/* ─── Body ─── */
+body {
+  background-color: var(--bg);
+  background-image: radial-gradient(
+    ellipse 80% 50% at 50% -20%,
+    rgba(37, 99, 235, 0.07) 0%,
+    transparent 60%
+  );
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: var(--font-inter, 'Inter'), sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  max-width: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+[data-theme="dark"] body {
+  background-image: radial-gradient(
+    ellipse 80% 50% at 50% -20%,
+    rgba(59, 130, 246, 0.12) 0%,
+    transparent 60%
+  );
+}
+
+/* ─── Selection ─── */
+::selection { background: #DBEAFE; color: #1E40AF; }
+[data-theme="dark"] ::selection { background: rgba(59, 130, 246, 0.3); color: #F1F5F9; }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #F1F5F9; }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #2563EB; }
+[data-theme="dark"] ::-webkit-scrollbar-track { background: #1A2035; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #2D3748; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover { background: #3B82F6; }
+
+/* ─── Keyframes ─── */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes pulse-green {
+  0%   { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.45); }
+  70%  { box-shadow: 0 0 0 12px rgba(22, 163, 74, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+}
+@keyframes dot-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+@keyframes theme-icon-enter {
+  from { transform: rotate(-180deg) scale(0.8); opacity: 0; }
+  to   { transform: rotate(0deg) scale(1); opacity: 1; }
+}
+@keyframes float-left {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes float-right {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(8px); }
+}
+
+/* ─── Hero decorative elements ─── */
+.hero-deco-left {
+  opacity: 0.13;
+  animation: float-left 8s ease-in-out infinite;
+  color: var(--text);
+}
+.hero-deco-right {
+  opacity: 0.18;
+  animation: float-right 10s ease-in-out infinite;
+  color: var(--accent);
+}
+[data-theme="light"] .hero-deco-left  { opacity: 0.08; }
+[data-theme="light"] .hero-deco-right { opacity: 0.10; }
+@media (max-width: 1100px) {
+  .hero-deco-left, .hero-deco-right { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-deco-left, .hero-deco-right { animation: none; }
+}
+
+/* ─── Theme icon ─── */
+.theme-icon-animate {
+  animation: theme-icon-enter 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  display: flex;
+}
+
+/* ─── Navbar link underline ─── */
+.nav-link { position: relative; text-decoration: none !important; }
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 1px;
+  background: var(--accent);
+  transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav-link:hover::after { width: 100%; }
+
+/* ─── Logo dot blink ─── */
+.dot-blink { animation: dot-blink 3s ease-in-out infinite; }
+
+/* ─── Project card link underline ─── */
+.project-link { position: relative; text-decoration: none !important; }
+.project-link::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0;
+  width: 0; height: 1px;
+  background: var(--accent);
+  transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.project-link:hover::after { width: 100%; }
+
+/* ─── Hero badge ─── */
+.badge-title {
+  display: inline-block;
+  background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  border-radius: 100px;
+  padding: 0.35rem 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #1D4ED8;
+}
+[data-theme="dark"] .badge-title {
+  background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(59,130,246,0.08));
+  border-color: rgba(59, 130, 246, 0.3);
+  color: #93C5FD;
+}
+
+/* ─── Hero arcs ─── */
+[data-theme="dark"] .hero-arc { stroke: rgba(59, 130, 246, 0.2); }
+
+/* ─── Sobre stat cards ─── */
+.stat-card {
+  background: #F8FAFF;
+  border: 1px solid #DBEAFE;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  text-align: center;
+}
+[data-theme="dark"] .stat-card {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+/* ─── Contato card ─── */
+.contact-card {
+  background: linear-gradient(135deg, #EFF6FF 0%, #FAFAFA 100%);
+  border: 1px solid #DBEAFE;
+  border-radius: 20px;
+  padding: 4rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+[data-theme="dark"] .contact-card {
+  background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, var(--bg-off) 100%);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+/* ─── Contato icon wrapper ─── */
+.contact-icon-bg { background: #EFF6FF; border-radius: 12px; padding: 12px; display: inline-flex; align-items: center; justify-content: center; }
+[data-theme="dark"] .contact-icon-bg { background: rgba(59, 130, 246, 0.15); }
+
+/* ─── Projects grid ─── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr));
+  gap: 1.25rem;
+}
+
+/* ─── Footer row ─── */
+.footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 1.5rem max(2rem, 5vw);
+}
+
+/* ─── Mobile (≤ 640px) ─── */
+@media (max-width: 640px) {
+  /* Hero photo */
+  .hero-photo-wrapper { width: 130px !important; height: 130px !important; }
+  .hero-photo-inner   { width: 130px !important; height: 130px !important; }
+  .hero-arc-svg       { width: 180px !important; height: 180px !important; }
+
+  /* Hero text */
+  .hero-name    { font-size: clamp(1.8rem, 6vw, 2.5rem) !important; }
+  .hero-tagline { font-size: 1rem !important; }
+
+  /* Hero CTAs */
+  .hero-ctas {
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100%;
+    max-width: 280px;
+  }
+  .hero-cta {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Sobre stats — tighter on mobile */
+  .stat-card { padding: 0.75rem 0.5rem !important; }
+  .stat-num   { font-size: 1.25rem !important; }
+  .stat-label { font-size: 0.65rem !important; }
+
+  /* Projects grid — single column */
+  .projects-grid { grid-template-columns: 1fr !important; }
+
+  /* Floating pill — always visible on touch devices */
+  .thumb-pill { opacity: 1 !important; transform: translateY(0) !important; }
+
+  /* Contato card */
+  .contact-card { padding: 2rem 1.25rem !important; }
+  .contact-wa-btn { width: 100% !important; justify-content: center !important; display: flex !important; }
+  .contact-links { flex-wrap: wrap !important; justify-content: center !important; }
+
+  /* Footer */
+  .footer-row { flex-direction: column !important; align-items: center !important; text-align: center !important; }
+}
